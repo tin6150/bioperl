@@ -44,7 +44,9 @@ RUN echo '==================================================================' ;\
     # cpan -f is force, -i is install.  Bio::Perl is a beast and won't install :(
     PERL_MM_USE_DEFAULT=1 cpan -fi Digest::SHA1                               ;\
     PERL_MM_USE_DEFAULT=1 cpan -fi Log::Log4perl                              ;\
-    # these are listed in AnanthharamanLab/Metabolic
+    PERL_MM_USE_DEFAULT=1 cpan -fi XML::DOM                                   ;\
+    PERL_MM_USE_DEFAULT=1 cpan -fi XML::XPathEngine                           ;\
+    # below are listed in AnanthharamanLab/Metabolic
     PERL_MM_USE_DEFAULT=1 cpan -fi Data::Dumper                               ;\
     PERL_MM_USE_DEFAULT=1 perl -MCPAN -e cpann "install POSIX qw(strftime)"   ;\  
     PERL_MM_USE_DEFAULT=1 cpan -fi Excel::Writer::XLSX ;\    

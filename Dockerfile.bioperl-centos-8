@@ -18,6 +18,13 @@ MAINTAINER Tin (at) LBL.gov
 ARG TZ="America/Denver"
 ARG DEBIAN_FRONTEND=noninteractive
 ARG PERL_MM_USE_DEFAULT=1
+ENV LANG=C
+ENV LC_ALL=C
+#apparently en_US.UTF-8 was not avail in the centos8 image...
+#ENV LANG=en_US.UTF-8
+#ENV LANGUAGE=en_US.UTF-8
+#ENV LC_CTYPE=en_US.UTF-8
+#ENV LC_ALL=en_US.UTF-8
 
 
 RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
@@ -28,7 +35,8 @@ RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
 
 RUN yum -y update        ;\
     yum -y install git file wget gzip bash tcsh zsh less vim bc tmux screen xterm  ;\
-    yum -y install perl cpan ;\
+    yum -y install gcc perl cpan ;\
+    # gcc was needed by cpan -i Digest::SHA1
     rpm -qa --qf '%{NAME} \t\t %{VERSION} \t %{RELEASE} \t %{ARCH}\n' > rpm-list.txt    ;\
     test -d /opt/gitrepo  || mkdir -p /opt/gitrepo        ;\
     test -d /opt/gitrepo/bioperl  || git clone https://github.com/tin6150/bioperl.git   ;\
@@ -42,6 +50,9 @@ RUN echo '==================================================================' ;\
     echo '==================================================================' ;\
     export PERL_MM_USE_DEFAULT=1                                              ;\
     # cpan -f is force, -i is install.  Bio::Perl is a beast and won't install :(
+    PERL_MM_USE_DEFAULT=1 cpan -fi Digest::SHA1                               ;\
+    PERL_MM_USE_DEFAULT=1 cpan -fi Log::Log4perl                              ;\
+    # these are listed in AnanthharamanLab/Metabolic
     PERL_MM_USE_DEFAULT=1 cpan -fi Data::Dumper                               ;\
     PERL_MM_USE_DEFAULT=1 perl -MCPAN -e cpann "install POSIX qw(strftime)"   ;\  
     PERL_MM_USE_DEFAULT=1 cpan -fi Excel::Writer::XLSX ;\    

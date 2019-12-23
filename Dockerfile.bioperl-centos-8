@@ -13,8 +13,8 @@ FROM centos:8
 MAINTAINER Tin (at) LBL.gov
 
 
-# ARG is applicable to container build time only?
-# whereas ENV is also effected at container run time?
+# ARG is applicable to container build time only
+# whereas ENV is also effected at container run time
 ARG TZ="America/Denver"
 ARG DEBIAN_FRONTEND=noninteractive
 ARG PERL_MM_USE_DEFAULT=1

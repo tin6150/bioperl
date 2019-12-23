@@ -11,11 +11,15 @@ FROM ubuntu:19.04
 MAINTAINER Tin (at) LBL.gov
 
 
-# ARG is applicable to container build time only?
-# whereas ENV is also effected at container run time?
+# ARG is applicable to container build time only
+# whereas ENV is also effected at container run time
 ARG TZ="America/Denver"
 ARG DEBIAN_FRONTEND=noninteractive
 ARG PERL_MM_USE_DEFAULT=1
+# these were only needed in centos-8
+#ENV LANG=C
+#ENV LC_ALL=C
+
 
 RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
     echo "Starting docker build process at " | tee -a _TOP_DIR_OF_CONTAINER_  ;\
@@ -27,7 +31,7 @@ RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
 
 
 RUN apt-get update ;\
-    apt-get -y --force-yes --quiet install perl-base git file wget gzip bash tcsh zsh less vim bc tmux screen xterm apt-utils ;\
+    apt-get -y --force-yes --quiet install gcc perl-base git file wget gzip bash tcsh zsh less vim bc tmux screen xterm apt-utils ;\
     dpkg --list > dpkg--list.output ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 
@@ -38,6 +42,9 @@ RUN echo '==================================================================' ;\
     echo '==================================================================' ;\
     export PERL_MM_USE_DEFAULT=1                                              ;\
     # cpan -f is force, -i is install.  Bio::Perl is a beast and won't install :(
+    PERL_MM_USE_DEFAULT=1 cpan -fi Digest::SHA1                               ;\
+    PERL_MM_USE_DEFAULT=1 cpan -fi Log::Log4perl                              ;\
+    # these are listed in AnanthharamanLab/Metabolic
     PERL_MM_USE_DEFAULT=1 cpan -fi Data::Dumper                               ;\
     PERL_MM_USE_DEFAULT=1 perl -MCPAN -e cpann "install POSIX qw(strftime)"   ;\  
     PERL_MM_USE_DEFAULT=1 cpan -fi Excel::Writer::XLSX ;\    

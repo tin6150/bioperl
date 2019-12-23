@@ -46,8 +46,9 @@ Build Commands
 
 ::
 
-        docker build -t tin6150/bioperl-centos-7                        -f Dockerfile.bioperl-centos-7    .  | tee LOG.bioperl-centos-7.txt
         docker build -t tin6150/bioperl-ubuntu-1904 -t tin6150/bioperl  -f Dockerfile.bioperl-ubuntu-1904 .  | tee LOG.bioperl-ubuntu-1905.txt
+        docker build -t tin6150/bioperl-centos-8                        -f Dockerfile.bioperl-centos-8    .  | tee LOG.bioperl-centos-8.txt
+        docker build -t tin6150/bioperl-centos-7                        -f Dockerfile.bioperl-centos-7    .  | tee LOG.bioperl-centos-7.txt
 
         THEN
         sudo singularity build --writable bioperl-centos-7.sif Singularity 2>&1  | tee LOG.singularity_build.txt

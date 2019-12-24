@@ -31,14 +31,21 @@ RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
     echo "Starting docker build process at " | tee -a _TOP_DIR_OF_CONTAINER_  ;\
     date |            tee -a       _TOP_DIR_OF_CONTAINER_ ;\
     test -d /opt/gitrepo  || mkdir -p /opt/gitrepo        ;\
+    cd      /opt/gitrepo ;\
     test -d /opt/gitrepo/bioperl  || git clone https://github.com/tin6150/bioperl.git  ;\
     cd /opt/gitrepo/bioperl &&  git pull && cd -   ;\
+    cd ../.. ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 
 # new apprach, call a helper shell script, so one set of cpan module list used by both ubuntu and centos build
-RUN cd /opt/gitrepo/bioperl ;\
-    bash setup-bioperl.sh   ;\
-		echo $? > setup-bioperl.exit.code ;\
+RUN echo '==================================================================' ;\
+    echo "installing perl/cpan packages"  | tee -a _TOP_DIR_OF_CONTAINER_     ;\
+    date | TZ=PST8PDT tee -a                       _TOP_DIR_OF_CONTAINER_     ;\
+    echo '==================================================================' ;\
+    cd /opt/gitrepo/bioperl ;\
+    bash setup-bioperl.sh   2>&1 | tee LOG.setup-bioperl.rst ;\
+    echo $? > setup-bioperl.exit.code ;\
+    cd ../../.. ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 
 

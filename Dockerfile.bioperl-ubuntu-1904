@@ -22,7 +22,7 @@ ARG PERL_MM_USE_DEFAULT=1
 
 
 RUN apt-get update ;\
-    apt-get -y --force-yes --quiet install gcc perl-base git file wget gzip bash tcsh zsh less vim bc tmux screen xterm apt-utils ;\
+    apt-get -y --force-yes --quiet install gcc perl-base git file wget gzip bash tcsh zsh less vim bc tmux screen xterm apt-utils libxml2-dev libxmlsec1-dev ;\
     dpkg --list > dpkg--list.output ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 

@@ -30,7 +30,7 @@ ENV LC_ALL=C
 RUN yum -y update        ;\
     yum -y install git file wget gzip bash tcsh zsh less vim bc tmux xterm   ;\
 		yum -y install screen || echo "pfff... centos8 no longer has screen rpm" ;\
-    yum -y install gcc perl ;\
+    yum -y install gcc perl libxml2-devel ;\
 		yum -y install perl-CPAN   || echo "ubuntu use a different package name" ;\
     # gcc was needed by cpan -i Digest::SHA1
     rpm -qa --qf '%{NAME} \t\t %{VERSION} \t %{RELEASE} \t %{ARCH}\n' > rpm-list.txt    ;\
@@ -53,7 +53,7 @@ RUN echo '==================================================================' ;\
     echo '==================================================================' ;\
     cd /opt/gitrepo/bioperl ;\
     bash setup-bioperl.sh   2>&1 | tee LOG.setup-bioperl.rst ;\
-    echo $? > setup-bioperl.exit.code ;\
+    echo $? | tee setup-bioperl.exit.code ;\
     cd ../../.. ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 
@@ -61,7 +61,7 @@ RUN echo '==================================================================' ;\
 RUN     cd / \
   && touch _TOP_DIR_OF_CONTAINER_  \
   && TZ=PST8PDT date  >> _TOP_DIR_OF_CONTAINER_  \
-  && echo  "Dockerfile.perl 2019.1223.2055"  >> _TOP_DIR_OF_CONTAINER_   \
+  && echo  "Build Info: Dockerfile.perl 2019.1223.2055"  >> _TOP_DIR_OF_CONTAINER_   \
   && echo  "Grand Finale"
 
 #- ENV TZ America/Los_Angeles  

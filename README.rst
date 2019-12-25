@@ -1,12 +1,18 @@
-Metabolic
----------
+BioPerl
+-------
 
 This project 
 ( https://github.com/tin6150/bioperl.git )
 is the containerization of BioPerl (from cpan)
 Mostly to serve as base for other project needing bioperl (eg Metabolic).
 
-++FIXME replace old ref to metabolic
+Two versions are available
+
+  - Centos 8.x base   + CPAN BioPerl
+  - Ubuntu 19.04 base + CPAN BioPerl
+
+Available as docker container and Singularity 3.2 container.
+
 
 Starting the container
 ======================
@@ -25,20 +31,12 @@ Host system need to have Singularity 3.2 installed.
 REMEMBER: content stored INSIDE the container is ephemeral and lost when container is restarted.  Save your data to a mounted volume shared with the host, eg $HOME
 
 
-Example Run
-===========
-
-::
-
-	perl /opt/METABOLIC/METABOLIC-G.pl -in-gn $HOME/5_genomes_test/Genome_files -t 34 -o $HOME/metabolic_out -m /opt/METABOLIC/
-	# /opt/METABOLIC/METABOLIC-G.pl is an example perl script needing Bio::Perl
-
 
 Container links
 ===============
 
 * https://hub.docker.com/repository/docker/tin6150/bioperl
-* https://singularity-hub.org/collections/TBD
+* https://singularity-hub.org/collections/3948
 
 
 Build Commands
@@ -51,7 +49,7 @@ Build Commands
         docker build -t tin6150/bioperl-centos-7                        -f Dockerfile.bioperl-centos-7    .  | tee LOG.bioperl-centos-7.txt
 
         THEN
-        sudo singularity build --writable bioperl-centos-7.sif Singularity 2>&1  | tee LOG.singularity_build.txt
+        sudo singularity build --writable bioperl-centos-8.sif Singularity 2>&1  | tee LOG.singularity_build.txt
 
 
 

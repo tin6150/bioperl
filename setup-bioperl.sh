@@ -60,6 +60,7 @@ export LC_ALL=C
     #PERL_MM_USE_DEFAULT=1 cpan -i perldoc ;
     #perldoc -t perllocal    ;
     cpan -a | tee cpan.list.out ;
+    wc -l cpan.list.out ;
     # last count = 1565, but no match for Bio
     # with -f count = 1900+, many match Bio
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'

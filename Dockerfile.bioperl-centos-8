@@ -29,9 +29,9 @@ ENV LC_ALL=C
 
 RUN yum -y update        ;\
     yum -y install git file wget gzip bash tcsh zsh less vim bc tmux xterm   ;\
-		yum -y install screen || echo "pfff... centos8 no longer has screen rpm" ;\
+    yum -y install screen || echo "pfff... centos8 no longer has screen rpm" ;\
     yum -y install gcc perl libxml2-devel ;\
-		yum -y install perl-CPAN   || echo "ubuntu use a different package name" ;\
+    yum -y install perl-CPAN   || echo "ubuntu use a different package name" ;\
     # gcc was needed by cpan -i Digest::SHA1
     rpm -qa --qf '%{NAME} \t\t %{VERSION} \t %{RELEASE} \t %{ARCH}\n' > rpm-list.txt    ;\
 
@@ -41,9 +41,15 @@ RUN touch    _TOP_DIR_OF_CONTAINER_  ;\
     date |            tee -a       _TOP_DIR_OF_CONTAINER_ ;\
     test -d /opt/gitrepo  || mkdir -p /opt/gitrepo        ;\
     cd      /opt/gitrepo ;\
-    test -d /opt/gitrepo/bioperl  || git clone https://github.com/tin6150/bioperl.git  ;\
-    cd /opt/gitrepo/bioperl &&  git pull && cd -   ;\
+    ## should be able to use git clone again if desired
+    ## test -d /opt/gitrepo/bioperl  || git clone https://github.com/tin6150/bioperl.git  ;\
+    ## cd /opt/gitrepo/bioperl &&  git pull && cd -   ;\
     cd ../.. ;\
+    test -d /opt/gitrepo/bioperl  || mkdir -p /opt/gitrepo/bioperl  ;\
+    cd      /opt/gitrepo/bioperl ;\
+    wget --quiet https://raw.githubusercontent.com/tin6150/bioperl/master/setup-bioperl.sh ;\
+    chmod a+x setup-bioperl.sh ;\
+    cd ../../.. ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
 
 # new apprach, call a helper shell script, so one set of cpan module list used by both ubuntu and centos build

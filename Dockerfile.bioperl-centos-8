@@ -58,6 +58,7 @@ RUN echo '==================================================================' ;\
     date | TZ=PST8PDT tee -a                       _TOP_DIR_OF_CONTAINER_     ;\
     echo '==================================================================' ;\
     cd /opt/gitrepo/bioperl ;\
+    bash setup-prereq.sh    2>&1 | tee LOG.setup-prereq.rst ;\
     bash setup-bioperl.sh   2>&1 | tee LOG.setup-bioperl.rst ;\
     echo $? | tee setup-bioperl.exit.code ;\
     cd ../../.. ;\

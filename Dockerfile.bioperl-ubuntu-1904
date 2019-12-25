@@ -43,11 +43,21 @@ RUN echo '==================================================================' ;\
     date | TZ=PST8PDT tee -a                       _TOP_DIR_OF_CONTAINER_     ;\
     echo '==================================================================' ;\
     cd /opt/gitrepo/bioperl ;\
+    bash setup-prereq.sh    2>&1 | tee LOG.setup-prereq.rst ;\
+    echo $? > setup-prereq.exit.code ;\
+    cd ../../.. ;\
+    echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
+
+# ubuntu version split this into 2 RUN block hoping to cache and avoid time out in cloud build
+RUN echo '==================================================================' ;\
+    echo "installing bioperl packages"    | tee -a _TOP_DIR_OF_CONTAINER_     ;\
+    date | TZ=PST8PDT tee -a                       _TOP_DIR_OF_CONTAINER_     ;\
+    echo '==================================================================' ;\
+    cd /opt/gitrepo/bioperl ;\
     bash setup-bioperl.sh   2>&1 | tee LOG.setup-bioperl.rst ;\
     echo $? > setup-bioperl.exit.code ;\
     cd ../../.. ;\
     echo 'Ending.  Last line of RUN block in Dockerbuild without continuation :)'
-
 
 RUN     cd / \
   && touch _TOP_DIR_OF_CONTAINER_  \

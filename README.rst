@@ -35,8 +35,9 @@ REMEMBER: content stored INSIDE the container is ephemeral and lost when contain
 Container links
 ===============
 
-* https://hub.docker.com/repository/docker/tin6150/bioperl
-* https://singularity-hub.org/collections/3948
+* https://hub.docker.com/repository/docker/tin6150/bioperl-centos-8 # cloud build
+* https://hub.docker.com/repository/docker/tin6150/bioperl          # local build + push
+* https://singularity-hub.org/collections/3948                      # only centos-8 version for now
 
 
 Build Commands
